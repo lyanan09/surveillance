@@ -1,0 +1,14 @@
+html, body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+.black-mirror {
+	width: 100%;
+	height: 100%;
+	/*padding-bottom: 56.25%;*/
+	background-color: black;
+}
+.black-mirror-text {
+	color: white;
+}
