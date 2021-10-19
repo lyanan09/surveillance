@@ -5,11 +5,13 @@ var macImg;
 let imgList;
 let videoScale = 200;
 let cols, rows;
- let xOffset = 17
-  let yOffset = 26
+let xOffset = 17
+let yOffset = 26
 
 // 在多个不同显示器显示
 // 在多个相同显示器显示
+// 你 我们 他们三者间的关系
+//人 破碎
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   background(0); 
@@ -48,12 +50,12 @@ function draw() {
       // fill(255, 30);
       // texture(capture)
       push();
-      rotateZ(frameCount * 0.01);
-  rotateX(frameCount * 0.01);
-  rotateY(frameCount * 0.01);
+      // rotateZ(frameCount * 0.01);
+  // rotateX(frameCount * 0.01);
+  // rotateY(frameCount * 0.01);
     image(macImg, x, y, macImg.width/columns, macImg.height/columns); //video on canvas, position, dimensions
 
-    image(capture, x+xOffset, y+yOffset, macImg.width/columns - xOffset * 2, macImg.height/columns - yOffset * 2); //video on canvas, position, dimensions
+    // image(capture, x+xOffset, y+yOffset, macImg.width/columns - xOffset * 2, macImg.height/columns - yOffset * 2); //video on canvas, position, dimensions
  pop();
       //noLoop();
     }
