@@ -3,35 +3,35 @@ let imgScale = 5;
 let floatImgs = [];
 
 function preload() {
-  for (var i = 1; i < 7; i++) {
-    let img = loadImage("./images/img-"+i+".png");
+  for (var i = 1; i < 14; i++) {
+    let img = loadImage("./assets/img-"+i+".jpg");
     imgList.push(img)
   }
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
-  noStroke();
-  for (let i = 0; i < 80; i++){
-    let x = random(width)
-    let y = random(height)
-    let r = random(100,200)
-    // let kitten = random(kittens)
-    let fi = new FloatImg(x,y,r)
+  
+  for (let i = 0; i < 100; i++){
+    let vector = createVector(random(0, width/4), random(0, height/4), random(-frameCount * 0.01,frameCount * 0.01));
+
+    let fi = new FloatImg(vector, random(imgList))
     floatImgs.push(fi)
   }
 }
 
 function draw() {
   background(0);
-  translate(-width/2,-height/2);
+  orbitControl();
+  // translate(-width/2,-height/2);
   floatImgs.map((img, index) => {
     // push();
     // rotateZ(frameCount * 0.001);
     // rotateX(frameCount * 0.001);
     // rotateY(frameCount * 0.001);
-    // img.move()
-    img.show()
+    // img.show()
+    img.move()
+
     // image(img, numRandom[index], numRandom[index], img.width/imgScale, img.height/imgScale)
     // pop();
   })
@@ -43,34 +43,39 @@ function mouseClicked() {
 }
 
 class FloatImg {
-  constructor(x,y,r,img) {
-    this.x = x;
-    this.y = y;
-    this.r = r;
-    this.image = random(imgList) 
+  constructor(vector,img) {
+    this.x = vector.x;
+    this.y = vector.y;
+    this.z = vector.z;
+    this.image = img 
   }
-  
-  clicked(px,py) {
-    //let d = dist(x,y,this.x,this.y)
-    //if (d < this.r) {
-    if (px > this.x && px < this.x + this.r && py > this.y && py < this.y + this.r) {
-      this.image = flower//random(kittens)
-    }
+
+  show() {
+    // rotateX(random(-1, 1));
+    // rotateY(random(-1, 1));
+    // rotateZ(random(-1, 1));
+    image(this.image, this.x, this.y, this.r, this.r) 
+
   }
   
   move() {
-    this.x = this.x + random(-5,5);
-    this.y = this.y + random(-5,5);
+    rotateX(this.x + frameCount * 0.0001);
+    rotateY(this.y + frameCount * 0.0001);
+    // rotateX(this.x + frameCount * 0.0001 + mouseY* 0.001);
+    // rotateY(this.y + frameCount * 0.0001 + mouseX* 0.001);
+    rotateZ(this.z + frameCount * 0.0001);
+    // this.x = this.x + frameCount * 0.001;
+    // this.y = this.y + frameCount * 0.001;
+    image(this.image, this.x, this.y, this.image.width/5, this.image.height/5) 
+    // image(this.image, this.x, this.y) 
+
    }
   
-  show() {
-    rotateZ(frameCount * 0.0001);
-    rotateX(frameCount * 0.0001);
-    rotateY(frameCount * 0.0001);
-    image(this.image, this.x, this.y, this.r, this.r) 
-    // stroke(255);
-    // strokeWeight(4);
-    // fill(this.brightness,125)
-    // ellipse(this.x,this.y,this.r*2);
-  }
+  // show() {
+    
+  //   // stroke(255);
+  //   // strokeWeight(4);
+  //   // fill(this.brightness,125)
+  //   // ellipse(this.x,this.y,this.r*2);
+  // }
 }
