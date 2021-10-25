@@ -1,5 +1,5 @@
 let myShader;
-let noiseList=[];
+let noiseList = [];
 let cam;
 var sphereList = []
 var s_size = 60
@@ -60,6 +60,7 @@ function draw() {
   // })
   drawGeometries()
 }
+
 function drawGeometries() {
   myShader.setUniform("uFrameCount", frameCount);
   myShader.setUniform("uNoiseTexture", noise);
@@ -104,7 +105,7 @@ function drawGeometries() {
   // rotateZ(frameCount * 0.01);
   rotateX(frameCount * 0.01);
   rotateY(frameCount * 0.005);
-  torus(70, 20,100, 100);
+  torus(70, 20, 100, 100);
   pop();
 
   translate(240, 0, 0);
@@ -112,12 +113,12 @@ function drawGeometries() {
   // rotateZ(frameCount * 0.01);
   rotateX(frameCount * 0.01);
   rotateY(frameCount * 0.005);
-  sphere(70,100, 100);
+  sphere(70, 100, 100);
   pop();
 }
 
 class SingleSphere {
-  constructor(x,y,z,img) {
+  constructor(x, y, z, img) {
     this.x = x;
     this.y = y;
     this.z = z;
@@ -131,12 +132,12 @@ class SingleSphere {
     // rotateX(frameCount * 0.01);
     // rotateY(frameCount * 0.005);
   }
-  
+
   show() {
     // push();
 
     translate(this.x, this.y, this.z)
-    
+
     // rotateX(frameCount * 0.01);
     rotateY(frameCount * 0.005);
     sphere(s_size, 160, 10);
