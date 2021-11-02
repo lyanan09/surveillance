@@ -8,9 +8,9 @@ var s_count = 3
 
 function preload() {
   myShader = loadShader("shader/cam_generative.vert", "shader/cam_generative.frag");
-  noise = loadImage("images/taobao.png");
-  noise_id = loadImage("images/id.png");
-  noise_yt = loadImage("images/youtube.png");
+  noise = loadImage("assets/taobao.png");
+  noise_id = loadImage("assets/id.png");
+  noise_yt = loadImage("assets/youtube.png");
   // for (var i = 1; i < 7; i++) {
   //   let noise = loadImage("./images/img-"+i+".png");
   //   noiseList.push(noise)

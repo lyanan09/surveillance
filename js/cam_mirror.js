@@ -1,25 +1,31 @@
-let capture, bgImg, sound, cols, rows, xOffset, yOffset, imgRatio, pg;
-let videoScale = 200;
+let capture, bgImg, sound, cols, rows, xOffset, yOffset, imgRatio, pg, sw, sh;
+let screenScale = 180;
+// let videoScale = 10;
+const filterType = ['THRESHOLD', 'GRAY', 'OPAQUE', 'INVERT', 'POSTERIZE', 'ERODE', 'DILATE', 'BLUR']
 
 function preload() {
   bgImg = loadImage('assets/mac_1.jpg');
+  // bgImg = loadImage('assets/screen.png');
   sound = loadSound('assets/beep.mp3');
+  camShader = loadShader('shader/mosaic.vert', 'shader/mosaic.frag');
+
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   capture = createCapture(VIDEO);
-  capture.size(width / videoScale, height / videoScale);
+  capture.size(windowWidth, windowHeight);
   capture.hide();
 
   imgRatio = bgImg.width / bgImg.height
-  xOffset = bgImg.width * 0.018
-  yOffset = bgImg.height * 0.016
+  xOffset = bgImg.width * 0.013
+  yOffset = bgImg.height * 0.008
 
-  cols = int(windowWidth / videoScale);
+  cols = int(windowWidth / screenScale);
   rows = int(windowHeight * cols * imgRatio / windowWidth);
-
-  pg = createGraphics(windowWidth / cols, windowHeight / rows);
+  sw = windowWidth / cols
+  sh = windowWidth / rows
+  pg = createGraphics(sw, sh);
   pg.noStroke();
 }
 
@@ -36,22 +42,26 @@ function draw() {
 
       push();
 
-      pg.image(bgImg, 0, 0, bgImg.width / cols, bgImg.height / cols);
-      pg.image(capture, xOffset, yOffset, bgImg.width / cols - xOffset * 2, bgImg.height / cols - yOffset * 2);
+      pg.image(bgImg, 0, 0, windowWidth / cols, windowWidth / cols / imgRatio);
 
-      if (frameCount % 100 < 50) {
+      let n = (mouseX && (mouseX / 50) > 1) ? (mouseX / 50) : 3
+      let sx = map(x, 0, windowWidth / cols * (cols - 1), 0, capture.width / n * (n - 1))
+      let sy = map(y, 0, windowHeight/ rows * (rows - 1), 0, capture.height / n * (n - 1))
+      let c = capture.get(sx, sy, capture.width / n, capture.height / n);
+      pg.image(c, xOffset, yOffset, windowWidth / cols - xOffset * 2, windowWidth / cols / imgRatio - yOffset * 2.2);
+
+      // if (frameCount % 20 < 10) {
         pg.fill("#00ff00");
-        pg.ellipse(bgImg.width / cols / 2, 4, 4, 4);
-      }
+        pg.ellipse(windowWidth / cols / 2, 4, 3, 3);
+      // }
 
       image(pg, x, y);
 
       pop();
     }
   }
-
-  if (frameCount % 100 == 0) {
-    // sound.play();
+  if (frameCount % 20 == 0) {
+    sound.play();
   }
 }
 
@@ -64,4 +74,8 @@ function timestampString() {
   return (
     year() + nf(month(), 2) + nf(day(), 2) + "-" + nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2)
   );
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
