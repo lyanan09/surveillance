@@ -67,6 +67,7 @@
 })();
 
 function getUserMedia(success, error) {
+  
   let constraints = { audio: true, video: true }
 
   if (navigator.mediaDevices.getUserMedia) {
